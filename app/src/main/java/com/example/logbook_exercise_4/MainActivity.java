@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 cursor.moveToLast();
                 index = cursor.getPosition();
                 Glide.with(MainActivity.this).load(displayLastImage()).into(imageCatured);
-                showLocation();
+                askLocationPermissions();
 
             }
         });
@@ -155,7 +155,14 @@ public class MainActivity extends AppCompatActivity {
         }else {
             dispatchTakePictureIntent();
         }
+    }
 
+    private void askLocationPermissions(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSION_FINE_LOCATION);
+        }else {
+            showLocation();
+        }
     }
 
     @Override
